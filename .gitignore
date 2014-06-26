@@ -7,7 +7,7 @@
 .config/ranger/*
 !.config/ranger/rifle.conf
 
-.xmonad/
+.xmonad/*
 !.xmonad/xmonad.hs
-!.xmonad/xmobar.conf
+!.xmonad/xmobar.config
 !.xmonad/bin/
