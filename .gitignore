@@ -1,0 +1,13 @@
+.config/mpd/*
+!.config/mpd/mpd.conf
+
+.weechat/sec.conf
+.weechat/weechat.log
+
+.config/ranger/*
+!.config/ranger/rifle.conf
+
+.xmonad/
+!.xmonad/xmonad.hs
+!.xmonad/xmobar.conf
+!.xmonad/bin/
