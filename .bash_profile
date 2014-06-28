@@ -59,7 +59,10 @@ function __prompt_command()
 }
 PROMPT_COMMAND=__prompt_command
 
-# Add CABAL bin/ and .xmonad/bin/ to PATH
+# Add ~/bin to PATH
+export PATH=$PATH:$HOME/bin
+
+# Add ~/.cabal/bin/ and ~/.xmonad/bin to PATH
 export PATH=$PATH:$HOME/.cabal/bin:$HOME/.xmonad/bin
 
 # Set Sublime Text as default editor

@@ -1,6 +1,6 @@
 ! Cursor theme
-Xcursor.theme: ArchCursorTheme
-Xcursor.size: 32
+Xcursor.theme: Ecliz-Arch
+Xcursor.size: 48
 
 !-------------------------------------------------------------------------------
 ! Xft settings
