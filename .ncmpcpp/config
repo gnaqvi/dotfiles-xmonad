@@ -12,7 +12,6 @@
  follow_now_playing_lyrics = "yes"
  display_screens_numbers_on_start = "yes"
  ignore_leading_the = "yes"
- lyrics_database = "1"
  song_columns_list_format = "(10)[blue]{l} (30)[green]{a} (30)[magenta]{b} (50)[yellow]{t}"
  colors_enabled = "yes"
  main_window_color = "white"

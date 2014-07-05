@@ -22,6 +22,7 @@ mpd
 dropboxd &
 pidgin &
 thunderbird &
+firefox &
 
 # Start screensaver
 xss-lock -- xscreensaver-command -lock &
