@@ -1,3 +1,0 @@
-#!/bin/bash
-# Set background image
-feh --bg-scale /home/ghazanfar/pictures/wallpapers/green.jpg

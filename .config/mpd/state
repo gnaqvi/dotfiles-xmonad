@@ -1,0 +1,24 @@
+sw_volume: 87
+audio_device_state:1:My ALSA device
+state: play
+current: 8
+time: 120
+random: 0
+repeat: 1
+single: 0
+consume: 0
+crossfade: 0
+mixrampdb: 0.000000
+mixrampdelay: -1.000000
+playlist_begin
+0:Junoon - Discography/junoon/Khwab.mp3
+1:Ayreon Complete Discography @ 320 kbps/Ayreon - 1995 - The Final Experiment (Special. Ed.)/Disc 2 - Bonus Acoustic CD/Ayreon - 01 - Dreamtime.mp3
+2:Ayreon Complete Discography @ 320 kbps/Ayreon - 1995 - The Final Experiment (Special. Ed.)/Disc 2 - Bonus Acoustic CD/Ayreon - 02 - Eyes Of Time.mp3
+3:Ayreon Complete Discography @ 320 kbps/Ayreon - 1995 - The Final Experiment (Special. Ed.)/Disc 2 - Bonus Acoustic CD/Ayreon - 03 - The Accusation.mp3
+4:Ayreon Complete Discography @ 320 kbps/Ayreon - 1995 - The Final Experiment (Special. Ed.)/Disc 2 - Bonus Acoustic CD/Ayreon - 04 - Ye Courtyard Minstrel Boy.mp3
+5:Ayreon Complete Discography @ 320 kbps/Ayreon - 1995 - The Final Experiment (Special. Ed.)/Disc 2 - Bonus Acoustic CD/Ayreon - 05 - Sail Away To Avalon.mp3
+6:Ayreon Complete Discography @ 320 kbps/Ayreon - 1995 - The Final Experiment (Special. Ed.)/Disc 2 - Bonus Acoustic CD/Ayreon - 06 - Nature's Dance.mp3
+7:Ayreon Complete Discography @ 320 kbps/Ayreon - 1995 - The Final Experiment (Special. Ed.)/Disc 2 - Bonus Acoustic CD/Ayreon - 07 - Waracle.mp3
+8:Ayreon Complete Discography @ 320 kbps/Ayreon - 1995 - The Final Experiment (Special. Ed.)/Disc 2 - Bonus Acoustic CD/Ayreon - 08 - Merlin's Will.mp3
+9:Ayreon Complete Discography @ 320 kbps/Ayreon - 1995 - The Final Experiment (Special. Ed.)/Disc 2 - Bonus Acoustic CD/Ayreon - 09 - The Charm Of The Seer.mp3
+playlist_end

@@ -1,5 +1,5 @@
 ! Cursor theme
-Xcursor.theme: Pulse-Glass
+Xcursor.theme: Simple-and-Soft
 Xcursor.size: 48
 
 !-------------------------------------------------------------------------------
@@ -18,7 +18,7 @@ Xft.hintstyle: hintslight
 ! http://pod.tst.eu/http://cvs.schmorp.de/rxvt-unicode/doc/rxvt.1.pod
 !-------------------------------------------------------------------------------
 
-URxvt.depth: 32
+!URxvt.depth: 32
 URxvt*.transparent: false
 !URxvt.fading: 0
 URxvt.urgentOnBell: true
@@ -32,12 +32,12 @@ URxvt.internalBorder:10
 URxvt.externalBorder:02
 
 ! Font
-URxvt.font: xft:Inconsolata:size=12:style=Regular
-URxvt.boldfont: xft:Inconsolata:size=12:style=Bold
+URxvt.font: xft:Inconsolata:size=11:style=Regular
+URxvt.boldfont: xft:Inconsolata:size=11:style=Bold
 
 ! Scrollbar
 URxvt.scrollBar: False
-Urxvt.secondaryScroll: true
+URxvt.secondaryScroll: true
 
 ! Input Method
 URxvt.preeditType: Root
@@ -61,40 +61,40 @@ URxvt.keysym.Control-F12: command:\033c
 
 ! Cursor
 URxvt.cursorBlink: true
-URxvt.cursorColor: #657b83
+URxvt.cursorColor: #CCCCCC
 URxvt.cursorUnderline: true
 
 ! Pointer
 URxvt.pointerBlank: false
 
 ! Colours
-URxvt.background: [92]#002b36
-URxvt.foreground: #657b83
-!URxvt.foreground: #ffffff
-URxvt.fadeColor: #002b36
+URxvt*background: #333333
+URxvt*foreground: #CCCCCC
+URxvt*cursorColor: #999999
+URxvt*colorBD: #FFFFFF
+URxvt*colorUL: #CCCCFF
 
-! ANSI colours
-! black
-URxvt.color0: #073642
-URxvt.color8: #002636
-! red
-URxvt.color1: #dc322f
-URxvt.color9: #cb4b16
-! green
-URxvt.color2: #008604
-URxvt.color10: #586e75
-! yellow
-URxvt.color3: #fadc11
-URxvt.color11: #fadc11
-! blue
-URxvt.color4: #268bd2
-URxvt.color12: #839496
-! magenta
-URxvt.color5: #d33682
-URxvt.color13: #6c71c4
-! cyan
-URxvt.color6: #2aa198
-URxvt.color14: #93a1a1
-! white
-URxvt.color7: #eee8d5
-URxvt.color15: #fdf6e3
+!BLK
+URxvt*color0:#666666
+URxvt*color8:#999999
+!RED
+URxvt*color1:#CC6666
+URxvt*color9:#FF9999
+!GRN
+URxvt*color2: #99CC66
+URxvt*color10: #99FF99
+!YEL
+URxvt*color3:#CC9966
+URxvt*color11: #FFFF99
+!BLE
+URxvt*color4: #6699CC
+URxvt*color12: #99CCFF
+!MAG
+URxvt*color5:#CC6699
+URxvt*color13: #FF99CC
+!CYN
+URxvt*color6:#66CCCC
+URxvt*color14: #99FFFF
+!WHT
+URxvt*color7:#CCCCCC
+URxvt*color15: #FFFFFF

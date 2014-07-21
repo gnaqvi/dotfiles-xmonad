@@ -1,5 +1,5 @@
 # GTK theme
-include "/usr/share/themes/Numix Solarized/gtk-2.0/gtkrc"
+include "/usr/share/themes/FlatStudioDark/gtk-2.0/gtkrc"
 
 # Font
 style "myfont" {

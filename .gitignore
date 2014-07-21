@@ -1,5 +1,8 @@
-.config/mpd/*
+﻿.config/mpd/*
 !.config/mpd/mpd.conf
+
+.ncmpcpp/*
+!.ncmpcpp/config
 
 .weechat/sec.conf
 .weechat/weechat.log
@@ -9,5 +12,4 @@
 
 .xmonad/*
 !.xmonad/xmonad.hs
-!.xmonad/xmobar.config
-!.xmonad/bin/
+!.xmonad/dzen/

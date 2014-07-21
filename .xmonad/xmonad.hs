@@ -1,7 +1,7 @@
 import System.IO
 import System.Exit
 import XMonad
-
+import Dzen
 -- Hooks
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
@@ -14,7 +14,7 @@ import XMonad.Layout.Spacing
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.Reflect
 import XMonad.Layout.IM
-import XMonad.Layout.PerWorkspace (onWorkspace)
+import XMonad.Layout.PerWorkspace (onWorkspace, onWorkspaces)
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Grid
 import XMonad.Layout.Fullscreen
@@ -23,97 +23,107 @@ import XMonad.Layout.Fullscreen
 import Data.Ratio ((%))
 import Data.List (isInfixOf)
 
-import XMonad.Util.Run(spawnPipe)
-import XMonad.Util.EZConfig(additionalKeys)
+import XMonad.Actions.CycleWS (nextWS, prevWS)
+import XMonad.Util.Run (spawnPipe)
+import XMonad.Util.EZConfig (additionalKeys)
+import Control.Monad (liftM2)
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
-
+import Data.Char (isSpace)
 
 ------------------------------------------------------------------------
 -- Terminal
+--
+
 myTerminal = "/usr/bin/urxvt"
 
 
 ------------------------------------------------------------------------
 -- Workspaces
-myWorkspaces = ["term","code","web","mail","chat","music","video", "gimp", "misc"]
+--
+
+myWorkspaces = ["main","text","ide","web","mail","chat","media","gimp","misc"]
 
 
 ------------------------------------------------------------------------
 -- Window rules
 --
--- To find the property name associated with a program, use
--- the command xprop WM_CLASS and click on the client you're interested
--- in.
---
--- To match on the WM_NAME, you can use 'title' in the same way that
--- 'className' and 'resource' are used below.
---
-myManageHook = composeAll
-    [ className =? "Subl3"            --> doF (W.shift "code")
-    , className =? "Eclipse"          --> doF (W.shift "code")
-    , className =? "Firefox"          --> doF (W.shift "web")
-    , className =? "Chromium"         --> doF (W.shift "web")
-    , className =? "Thunderbird"      --> doF (W.shift "mail")
-    , className =? "Pidgin"           --> doShift "chat"
-    , className =? "Gimp"             --> doFloat
-    , className =? "mpv"              --> doFloat
-    , className =? "Transmission-gtk" --> doFloat
-    , resource  =? "desktop_window"   --> doIgnore
-    , className =? "stalonetray"      --> doIgnore
-    , isFullscreen                    --> (doF W.focusDown <+> doFullFloat)]
+
+myManageHook = composeAll . concat $
+  [
+    -- Applications that go to text.
+      [ className =? b --> viewShift "text" | b <- myClassTextShifts ]
+
+    -- Applications that go to ide.
+    , [ className =? c --> viewShift "ide" | c <- myClassDevShifts ]
+
+    -- Applications that go to web.
+    , [ className =? d --> viewShift "web" | d <- myClassWebShifts ]
+
+    -- Applications that go to mail.
+    , [ className =? e --> viewShift "mail" | e <- myClassMailShifts ]
+
+    -- Applications that go to chat.
+    , [ className =? f --> viewShift "chat" | f <- myClassChatShifts ]
+
+    -- Applications that go to media.
+    , [ className =? g --> viewShift "media" | g <- myClassMediaShifts ]
+
+    -- Applications that need floating regardless of workspace.
+    , [ className =? h --> doCenterFloat | h <- myClassFloats ]
+    , [ resource  =? i --> doCenterFloat | i <- myResourceFloats ]
+
+    -- Applications that need to be ignored.
+    , [ className =? j --> doIgnore | j <- myClassIgnores ]
+    , [ resource  =? k --> doIgnore | k <- myResourceIgnores ]
+
+    , [ composeOne [ isFullscreen -?> (doF W.focusDown <+> doFullFloat) ] ]
+  ]
+  where
+      viewShift          = doF . liftM2 (.) W.greedyView W.shift
+      myClassWebShifts   = ["Firefox","Chromium"]
+      myClassChatShifts  = ["Pidgin", "Skype"]
+      myClassMediaShifts = ["mpv"]
+      myClassTextShifts  = ["Subl3"]
+      myClassDevShifts   = ["eclipse"]
+      myClassMailShifts  = ["Thunderbird"]
+      myClassFloats      = ["feh"]
+      myResourceFloats   = ["Downloads", "Dialog", "Places", "Browser"]
+      myClassIgnores     = ["stalonetray"]
+      myResourceIgnores  = ["desktop_window"]
 
 
 ------------------------------------------------------------------------
 -- Layout Hook
-myLayoutHook = onWorkspace "chat" pidginLayout $
+--
+
+myLayoutHook = onWorkspace "chat" chatLayout $
+               onWorkspace "gimp" gimpLayout $
                spacingLayout
     where
-      standardLayouts = avoidStruts(Tall 1 (3/100) (1/2) |||
-                                    Mirror (Tall 1 (3/100) (1/2)))
-
-      pidginLayout = spacing 5 $ avoidStruts(withIM (18/100) (Role "buddy_list") Grid)
-
-      spacingLayout = (smartSpacing 5 $ standardLayouts)
+      standardLayouts = avoidStruts(Tall 1 (3/100) (1/2) ||| Mirror (Tall 1 (3/100) (1/2)))
+      chatLayout      = spacing 2 $ avoidStruts(IM (1%5) (Or (Title "Buddy List") (And (Resource "main") (ClassName "pidgin"))))
+      gimpLayout      = spacing 2 $ avoidStruts((withIM (0.12) (Role "gimp-toolbox") $ reflectHoriz $ withIM (0.15) (Role "gimp-dock") Full))
+      spacingLayout   = (smartSpacing 2 $ standardLayouts)
 
 
 ------------------------------------------------------------------------
 -- Colors and borders
+--
 
--- Solarized theme
-sBase03  = "#002b36"
-sBase02  = "#073642"
-sBase01  = "#586e75"
-sBase00  = "#657b83"
-sBase0   = "#839496"
-sBase1   = "#93a1a1"
-sBase2   = "#eee8d5"
-sBase3   = "#fdf6e3"
-sYellow  = "#b58900"
-sOrange  = "#cb4b16"
-sRed     = "#dc322f"
-sMagenta = "#d33682"
-sViolet  = "#6c71c4"
-sBlue    = "#268bd2"
-sCyan    = "#2aa198"
-sGreen   = "#859900"
-
--- Some other colors
-pink  = "#ffb6b0"
-green = "#ceffac";
+-- Custom theme colors
+red   = "#ff0000"
+pink  = "#ff807a"
+green = "#ceffac"
+white = "#cfcfcf"
+black = "#000000"
 
 -- Border colors
-myNormalBorderColor  = sBase01
-myFocusedBorderColor = sGreen
-
--- Color of current window title in xmobar.
-xmobarTitleColor = pink
-
--- Color of current workspace in xmobar.
-xmobarCurrentWorkspaceColor = green
+myNormalBorderColor  = white
+myFocusedBorderColor = pink
 
 -- Width of the window border in pixels.
-myBorderWidth = 2
+myBorderWidth = 1
 
 
 ------------------------------------------------------------------------
@@ -135,6 +145,10 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   [ ((modMask .|. shiftMask, xK_Return),
      spawn $ XMonad.terminal conf)
 
+  -- Launch dmenu.
+  , ((modMask, xK_p),
+     spawn "dmenu_run -fn 'DejaVu Sans Mono' -h 24 -nb '#000000' -nf '#cfcfcf' -sb '#ff807a' -sf '#000000'")
+
   -- Lock the screen using xscreensaver.
   , ((modMask .|. controlMask, xK_l),
      spawn "xscreensaver-command -lock")
@@ -142,12 +156,12 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   -- Take a screenshot in select mode.
   -- After pressing this key binding, click a window, or draw a rectangle with
   -- the mouse.
-  , ((modMask .|. shiftMask, xK_p),
+  , ((modMask .|. shiftMask, xK_s),
      spawn "select-screenshot")
 
   -- Take full screenshot in multi-head mode.
   -- That is, take a screenshot of everything you see.
-  , ((modMask .|. shiftMask, xK_p),
+  , ((modMask .|. shiftMask, xK_s),
      spawn "screenshot")
 
   -- Mute volume.
@@ -164,25 +178,35 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
   -- Audio previous.
   , ((0, 0x1008FF16),
-     spawn "")
+     spawn "ncmpcpp prev")
 
   -- Play/pause.
   , ((0, 0x1008FF14),
-     spawn "")
+     spawn "ncmpcpp toggle")
 
   -- Audio next.
   , ((0, 0x1008FF17),
-     spawn "")
+     spawn "ncmpcpp next")
 
   -- Eject CD tray.
   , ((0, 0x1008FF2C),
      spawn "eject -T")
 
---wifi (0 , 0x1008ff13)
+  -- Rebind mod + q: custom restart xmonad script
+  , ((modMask, xK_q),
+     spawn "killall dzen2 && xmonad --recompile && xmonad --restart")
 
   --------------------------------------------------------------------
   -- "Standard" xmonad key bindings
   --
+
+  -- Shift to prevous workspace.
+  , ((modMask, xK_Right),
+     nextWS)
+
+  -- Shift to next workspace.
+  , ((modMask, xK_Left),
+     prevWS)
 
   -- Close focused window.
   , ((modMask .|. shiftMask, xK_c),
@@ -251,10 +275,6 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   -- Quit xmonad.
   , ((modMask .|. shiftMask, xK_q),
      io (exitWith ExitSuccess))
-
-  -- Restart xmonad.
-  , ((modMask, xK_q),
-     restart "xmonad" True)
   ]
   ++
 
@@ -275,8 +295,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 ------------------------------------------------------------------------
 -- Mouse bindings
 --
--- Focus rules
--- True if your focus should follow your mouse cursor.
+
 myFocusFollowsMouse :: Bool
 myFocusFollowsMouse = True
 
@@ -300,47 +319,109 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
 
 ------------------------------------------------------------------------
 -- Status bars and logging
--- Perform an arbitrary action on each internal state change or X event.
--- See the 'DynamicLog' extension for examples.
---
--- To emulate dwm's status bar
---
--- > logHook = dynamicLogDzen
 --
 
+-- Log hook that prints out everything to a dzen handler.
+myLogHook h = dynamicLogWithPP $ myPrettyPrinter h
+
+-- Pretty printer for dzen workspace bar.
+myPrettyPrinter h = dzenPP
+  {
+    ppOutput          = hPutStrLn h
+  , ppCurrent         = dzenColor black pink . pad
+  , ppHidden          = dzenColor "#e5e5e5" black . pad . clickable myWorkspaces . trimSpace
+  , ppHiddenNoWindows = dzenColor "#444444" black . pad . clickable myWorkspaces . trimSpace
+  , ppUrgent          = dzenColor "#ff0000" red . pad . clickable myWorkspaces . trimSpace . dzenStrip
+  , ppWsSep           = " "
+  , ppSep             = " | "
+  , ppTitle           = (" " ++) . dzenColor pink black . shorten 120 . dzenEscape
+  , ppLayout          = dzenColor green black . pad .
+                        (\x -> case x of
+                          "SmartSpacing 2 Tall"        -> "Tall"
+                          "SimplestFloat"              -> "Float"
+                          "SmartSpacing 2 Mirror Tall" -> "Mirror"
+                          _                            -> x
+                        )
+  }
+
+-- Wraps a workspace name with a dzen clickable action that focusses that workspace.
+clickable workspaces workspace = clickableExp workspaces 1 workspace
+
+clickableExp [] _ ws = ws
+clickableExp (ws:other) n l | l == ws = "^ca(1,xdotool key super+" ++ show (n) ++ ")" ++ ws ++ "^ca()"
+                            | otherwise = clickableExp other (n+1) l
+
+-- Trims leading and trailing white space.
+trimSpace = f . f
+    where f = reverse . dropWhile isSpace
+
+myDzenFont = "DejaVu Sans Mono:pixelsize=12"
+
+-- Workspace dzen bar
+myWorkDzen = DzenConf {
+    x_position = Just 0
+  , y_position = Just 0
+  , width      = Just 1820
+  , height     = Just 22
+  , alignment  = Just LeftAlign
+  , font       = Just myDzenFont
+  , fg_color   = Just white
+  , bg_color   = Just black
+  , exec       = []
+  , addargs    = []
+}
+
+-- Music dzen bar
+myMusicDzen = DzenConf {
+    x_position = Just 0
+  , y_position = Just 1080
+  , width      = Just 700
+  , height     = Just 24
+  , alignment  = Just LeftAlign
+  , font       = Just myDzenFont
+  , fg_color   = Just pink
+  , bg_color   = Just black
+  , exec       = []
+  , addargs    = []
+}
+
+-- System information dzen bar
+mySysInfoDzen = DzenConf {
+    x_position = Just 700
+  , y_position = Just 1080
+  , width      = Just 1220
+  , height     = Just 24
+  , alignment  = Just RightAlign
+  , font       = Just myDzenFont
+  , fg_color   = Just pink
+  , bg_color   = Just black
+  , exec       = []
+  , addargs    = []
+}
 
 ------------------------------------------------------------------------
 -- Startup hook
--- Perform an arbitrary action each time xmonad starts or is restarted
--- with mod-q.  Used by, e.g., XMonad.Layout.PerWorkspace to initialize
--- per-workspace layout choices.
---
 -- By default, do nothing.
+--
 myStartupHook = return ()
 
 
 ------------------------------------------------------------------------
 -- Run xmonad with all the defaults we set up.
 --
+
 main = do
-  xmproc <- spawnPipe "xmobar ~/.xmonad/xmobar.config"
+  workspaceBar <- spawnDzen myWorkDzen
+  spawnToDzen "conky -c ~/.conkyrc-sysinfo" mySysInfoDzen
+  spawnToDzen "conky -c ~/.conkyrc-music" myMusicDzen
   xmonad $ defaults {
-      logHook = dynamicLogWithPP $ xmobarPP {
-            ppOutput = hPutStrLn xmproc
-          , ppTitle = xmobarColor xmobarTitleColor "" . shorten 50
-          , ppOrder = \(ws:_:t:_) -> [ws, t]
-          , ppCurrent = xmobarColor xmobarCurrentWorkspaceColor ""
-          , ppSep = " "
-      }
+        logHook = myLogHook workspaceBar
       , manageHook = manageDocks <+> myManageHook
       , startupHook = setWMName "LG3D"
 }
 
 ------------------------------------------------------------------------
 -- Combine it all together
--- A structure containing your configuration settings, overriding
--- fields in the default config. Any you don't override, will
--- use the defaults defined in xmonad/XMonad/Config.hs
 --
 defaults = defaultConfig {
     -- simple stuff
