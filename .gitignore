@@ -1,16 +1,16 @@
-﻿!.config/mpd/mpd.conf
+﻿
 .config/mpd/*
+!.config/mpd/mpd.conf
 
-!.ncmpcpp/config
 .ncmpcpp/*
+!.ncmpcpp/config
 
 .weechat/sec.conf
 .weechat/weechat.log
 
-!.config/ranger/rifle.conf
 .config/ranger/*
+!.config/ranger/rifle.conf
 
+.xmonad/*
 !.xmonad/xmonad.hs
 !.xmonad/dzen/
-.xmonad/*
-
