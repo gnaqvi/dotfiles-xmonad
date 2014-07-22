@@ -9,5 +9,5 @@ mpd_hostlocalhost
 mpd_port 6600
 
 TEXT
-^bg(\#232323)^fg(\#ceffac) Music ^bg()^fg(\#e5e5e5) ${mpd_artist 30} - ${mpd_title 40} ($mpd_length) \
-^bg(\#232323)^fg(\#ceffac) Volume ^bg()^fg(\#e5e5e5) ${exec amixer get Master | egrep -o "[0-9]+%"} \
+^bg(\#232323)^fg(green) Music ^bg()^fg(\#e5e5e5) ${mpd_artist 30} - ${mpd_title 40} ($mpd_length) \
+^bg(\#232323)^fg(green) Volume ^bg()^fg(\#e5e5e5) ${exec amixer get Master | egrep -o "[0-9]+%"} \

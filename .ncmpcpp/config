@@ -2,9 +2,9 @@ mpd_music_dir = "/run/media/ghazanfar/Data/Music"
 mpd_crossfade_time = "5"
 
 # Visualizer
-#visualizer_fifo_path = "/tmp/mpd.fifo"
-#visualizer_output_name = "fifo"
-#visualizer_type = "wave" (spectrum/wave)
+visualizer_fifo_path = "/tmp/mpd.fifo"
+visualizer_output_name = "fifo"
+visualizer_type = "wave" (spectrum/wave)
 
 # Playlist
 song_columns_list_format = "(6f)[cyan]{l} (40)[default]{t|f} (25)[red]{a} (30)[blue]{b}"
@@ -37,7 +37,7 @@ main_window_highlight_color = "red"
 progressbar_color = "green"
 statusbar_color = "black"
 active_column_color = "red"
-visualizer_color = "cyan"
+visualizer_color = "red"
 
 # Others
 song_window_title_format = "MPD: {%a > }{%t}{ [%b{ Disc %d}]}|{%f}"

@@ -4,6 +4,7 @@ import XMonad
 import Dzen
 -- Hooks
 import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.InsertPosition
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.SetWMName
@@ -114,7 +115,7 @@ myLayoutHook = onWorkspace "chat" chatLayout $
 -- Custom theme colors
 red   = "#ff0000"
 pink  = "#ff807a"
-green = "#ceffac"
+green = "#00ff00"
 white = "#cfcfcf"
 black = "#000000"
 
@@ -337,9 +338,10 @@ myPrettyPrinter h = dzenPP
   , ppTitle           = (" " ++) . dzenColor pink black . shorten 120 . dzenEscape
   , ppLayout          = dzenColor green black . pad .
                         (\x -> case x of
-                          "SmartSpacing 2 Tall"        -> "Tall"
                           "SimplestFloat"              -> "Float"
+                          "SmartSpacing 2 Tall"        -> "Tall"
                           "SmartSpacing 2 Mirror Tall" -> "Mirror"
+                          "Spacing 2 IM"               -> "IM"
                           _                            -> x
                         )
   }
@@ -416,7 +418,7 @@ main = do
   spawnToDzen "conky -c ~/.conkyrc-music" myMusicDzen
   xmonad $ defaults {
         logHook = myLogHook workspaceBar
-      , manageHook = manageDocks <+> myManageHook
+      , manageHook = insertPosition Below Newer <+> manageDocks <+> myManageHook
       , startupHook = setWMName "LG3D"
 }
 

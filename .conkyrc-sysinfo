@@ -14,4 +14,4 @@ TEXT
 ^bg(\#232323)^fg() Memory ^bg()^fg(\#e5e5e5) $mem \
 ^bg(\#232323)^fg() WLAN ^bg()^fg(\#e5e5e5) ${downspeedf wlp5s0}/${upspeedf wlp5s0} \
 ^bg(\#232323)^fg() Battery ^bg()^fg(\#e5e5e5) ${battery_short BAT1} \
-^bg(\#232323)^fg(steelblue3) ${time %a %d %I:%M.%S}
+^bg(\#232323)^fg(cyan) ${time %a %d %I:%M.%S}
