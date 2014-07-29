@@ -1,0 +1,3 @@
+#!/bin/sh
+# Fix screens after, for example, a fullscreen game shut off one monitor.
+xrandr -s 0

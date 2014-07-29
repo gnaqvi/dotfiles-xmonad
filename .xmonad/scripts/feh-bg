@@ -1,0 +1,3 @@
+#!/bin/bash
+# Set background image
+feh --bg-scale /home/ghazanfar/pictures/wallpapers/where-is-my-gun.jpg

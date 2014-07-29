@@ -13,4 +13,5 @@
 
 .xmonad/*
 !.xmonad/xmonad.hs
-!.xmonad/dzen/
+!.xmonad/conky/
+!.xmonad/scripts/
