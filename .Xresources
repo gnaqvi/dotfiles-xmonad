@@ -68,7 +68,7 @@ URxvt.cursorUnderline: true
 URxvt.pointerBlank: false
 
 ! Colours
-URxvt*background: #333333
+URxvt*background: #2D2D2D
 URxvt*foreground: #CCCCCC
 URxvt*cursorColor: #999999
 URxvt*colorBD: #FFFFFF
@@ -78,8 +78,8 @@ URxvt*colorUL: #CCCCFF
 URxvt*color0:#666666
 URxvt*color8:#999999
 !RED
-URxvt*color1:#CC6666
-URxvt*color9:#FF9999
+URxvt*color1:#E53238
+URxvt*color9:#ED6666
 !GRN
 URxvt*color2: #99CC66
 URxvt*color10: #99FF99

@@ -2,6 +2,16 @@ defaults.pcm.!rate_converter "samplerate_best"
 defaults.pcm.dmix.!rate 96000
 defaults.pcm.dmix.!format S24_LE
 
+pcm.!default {
+  type plug
+  slave.pcm asymed
+}
+
+pcm.asymed {
+  type asym
+  playback.pcm plugequal
+  capture.pcm snoop
+}
 pcm.snoop {
   type dsnoop
   ipc_key 5978292
@@ -11,18 +21,11 @@ pcm.snoop {
   }
 }
 ctl.equal {
- type equal;
+  type equal;
 }
 pcm.plugequal {
   type equal
   slave.pcm "plug:dmix"
 }
-pcm.asymed{
-       type asym
-       playback.pcm plugequal
-       capture.pcm snoop
-}
-pcm.!default {
-  type plug
-  slave.pcm asymed
-}
+
+

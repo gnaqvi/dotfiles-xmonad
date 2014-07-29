@@ -2,9 +2,10 @@ import System.IO
 import System.Exit
 import XMonad
 import Dzen
+
 -- Hooks
 import XMonad.Hooks.DynamicLog
-import XMonad.Hooks.InsertPosition
+import XMonad.Hooks.UrgencyHook
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.SetWMName
@@ -78,6 +79,9 @@ myManageHook = composeAll . concat $
     , [ className =? j --> doIgnore | j <- myClassIgnores ]
     , [ resource  =? k --> doIgnore | k <- myResourceIgnores ]
 
+    -- Applications that need to be added to slave panel when created.
+    , [ className =? "urxvt" --> doF (W.swapDown) ]
+
     , [ composeOne [ isFullscreen -?> (doF W.focusDown <+> doFullFloat) ] ]
   ]
   where
@@ -86,9 +90,9 @@ myManageHook = composeAll . concat $
       myClassChatShifts  = ["Pidgin", "Skype"]
       myClassMediaShifts = ["mpv"]
       myClassTextShifts  = ["Subl3"]
-      myClassDevShifts   = ["eclipse"]
+      myClassDevShifts   = ["Eclipse", "Android SDK Manager"]
       myClassMailShifts  = ["Thunderbird"]
-      myClassFloats      = ["feh"]
+      myClassFloats      = ["feh", "Android SDK Manager"]
       myResourceFloats   = ["Downloads", "Dialog", "Places", "Browser"]
       myClassIgnores     = ["stalonetray"]
       myResourceIgnores  = ["desktop_window"]
@@ -113,14 +117,18 @@ myLayoutHook = onWorkspace "chat" chatLayout $
 --
 
 -- Custom theme colors
-red   = "#ff0000"
-pink  = "#ff807a"
-green = "#00ff00"
-white = "#cfcfcf"
-black = "#000000"
+red       = "#e53238"
+pink      = "#ed6666"
+green     = "#99CC66"
+yellow    = "#ffff00"
+blue      = "#99CCFF"
+white     = "#cccccc"
+lightGrey = "#cfcfcf"
+darkGrey  = "#444444"
+black     = "#000000"
 
 -- Border colors
-myNormalBorderColor  = white
+myNormalBorderColor  = lightGrey
 myFocusedBorderColor = pink
 
 -- Width of the window border in pixels.
@@ -157,13 +165,17 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   -- Take a screenshot in select mode.
   -- After pressing this key binding, click a window, or draw a rectangle with
   -- the mouse.
-  , ((modMask .|. shiftMask, xK_s),
-     spawn "select-screenshot")
+  , ((modMask .|. controlMask, xK_s),
+     spawn "~/.xmonad/scripts/select-screenshot")
 
   -- Take full screenshot in multi-head mode.
   -- That is, take a screenshot of everything you see.
-  , ((modMask .|. shiftMask, xK_s),
-     spawn "screenshot")
+  , ((modMask .|. controlMask, xK_f),
+     spawn "~/.xmonad/scripts/screenshot")
+
+  -- Turn off screen.
+  , ((modMask .|. controlMask, xK_o),
+     spawn "~/.xmonad/scripts/screen off")
 
   -- Mute volume.
   , ((0 , 0x1008ff12),
@@ -178,16 +190,28 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
      spawn "amixer -q set Master 5%+")
 
   -- Audio previous.
+  -- (Multimedia Key))
   , ((0, 0x1008FF16),
-     spawn "ncmpcpp prev")
+     spawn "mpc prev")
+  -- (Custom shortcut)
+  , ((modMask, xK_bracketleft),
+     spawn "mpc prev")
 
   -- Play/pause.
+  -- (Multimedia key)
   , ((0, 0x1008FF14),
-     spawn "ncmpcpp toggle")
+     spawn "mpc toggle")
+  -- (Custom shortcut)
+  , ((modMask, xK_backslash),
+     spawn "mpc toggle")
 
   -- Audio next.
+  -- (Multimedia key)
   , ((0, 0x1008FF17),
-     spawn "ncmpcpp next")
+     spawn "mpc next")
+  -- (Custom shortcut)
+  , ((modMask, xK_bracketright),
+     spawn "mpc next")
 
   -- Eject CD tray.
   , ((0, 0x1008FF2C),
@@ -330,9 +354,9 @@ myPrettyPrinter h = dzenPP
   {
     ppOutput          = hPutStrLn h
   , ppCurrent         = dzenColor black pink . pad
-  , ppHidden          = dzenColor "#e5e5e5" black . pad . clickable myWorkspaces . trimSpace
-  , ppHiddenNoWindows = dzenColor "#444444" black . pad . clickable myWorkspaces . trimSpace
-  , ppUrgent          = dzenColor "#ff0000" red . pad . clickable myWorkspaces . trimSpace . dzenStrip
+  , ppHidden          = dzenColor white black . pad . clickable myWorkspaces . trimSpace
+  , ppHiddenNoWindows = dzenColor darkGrey black . pad . clickable myWorkspaces . trimSpace
+  , ppUrgent          = dzenColor black red . pad . clickable myWorkspaces . trimSpace . dzenStrip
   , ppWsSep           = " "
   , ppSep             = " | "
   , ppTitle           = (" " ++) . dzenColor pink black . shorten 120 . dzenEscape
@@ -367,7 +391,7 @@ myWorkDzen = DzenConf {
   , height     = Just 22
   , alignment  = Just LeftAlign
   , font       = Just myDzenFont
-  , fg_color   = Just white
+  , fg_color   = Just lightGrey
   , bg_color   = Just black
   , exec       = []
   , addargs    = []
@@ -414,13 +438,13 @@ myStartupHook = return ()
 
 main = do
   workspaceBar <- spawnDzen myWorkDzen
-  spawnToDzen "conky -c ~/.conkyrc-sysinfo" mySysInfoDzen
-  spawnToDzen "conky -c ~/.conkyrc-music" myMusicDzen
-  xmonad $ defaults {
-        logHook = myLogHook workspaceBar
-      , manageHook = insertPosition Below Newer <+> manageDocks <+> myManageHook
+  spawnToDzen "conky -c ~/.xmonad/conky/sysinfo" mySysInfoDzen
+  spawnToDzen "conky -c ~/.xmonad/conky/music" myMusicDzen
+  xmonad $ withUrgencyHook NoUrgencyHook $ defaults {
+        logHook     = myLogHook workspaceBar
+      , manageHook  = manageDocks <+> myManageHook
       , startupHook = setWMName "LG3D"
-}
+  }
 
 ------------------------------------------------------------------------
 -- Combine it all together

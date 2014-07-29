@@ -5,8 +5,8 @@
 .ncmpcpp/*
 !.ncmpcpp/config
 
-.weechat/sec.conf
-.weechat/weechat.log
+.weechat/*
+!.weechat/weechat.conf
 
 .config/ranger/*
 !.config/ranger/rifle.conf
