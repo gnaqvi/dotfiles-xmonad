@@ -71,13 +71,16 @@ myManageHook = composeAll . concat $
     -- Applications that go to media.
     , [ className =? g --> viewShift "media" | g <- myClassMediaShifts ]
 
+    -- Gimp goes to its own workspace.
+    , [ className =? h --> viewShift "gimp" | h <- myGimpShift ]
+
     -- Applications that need floating regardless of workspace.
-    , [ className =? h --> doCenterFloat | h <- myClassFloats ]
-    , [ resource  =? i --> doCenterFloat | i <- myResourceFloats ]
+    , [ className =? i --> doCenterFloat | i <- myClassFloats ]
+    , [ resource  =? j --> doCenterFloat | j <- myResourceFloats ]
 
     -- Applications that need to be ignored.
-    , [ className =? j --> doIgnore | j <- myClassIgnores ]
-    , [ resource  =? k --> doIgnore | k <- myResourceIgnores ]
+    , [ className =? k --> doIgnore | k <- myClassIgnores ]
+    , [ resource  =? l --> doIgnore | l <- myResourceIgnores ]
 
     -- Applications that need to be added to slave panel when created.
     , [ className =? "urxvt" --> doF (W.swapDown) ]
@@ -92,6 +95,7 @@ myManageHook = composeAll . concat $
       myClassMailShifts  = ["Thunderbird"]
       myClassChatShifts  = ["Pidgin", "Skype"]
       myClassMediaShifts = ["Audacity"]
+      myGimpShift        = ["Gimp"]
       myClassFloats      = ["feh", "mpv", "Android SDK Manager", "Transmission-gtk", "Nm-connection-editor", "File Operation Progress"]
       myResourceFloats   = ["Downloads", "Dialog", "Places", "Browser"]
       myClassIgnores     = ["stalonetray"]
