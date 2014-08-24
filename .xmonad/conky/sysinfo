@@ -2,16 +2,14 @@ background false
 cpu_avg_samples 2
 format_human_readable yes
 if_up_strictness address
-short_unitson
+short_units on
 update_interval 1.0
 out_to_console yes
-mpd_hostlocalhost
-mpd_port 6600
 
 TEXT
-^bg(\#1E1E1E)^fg() CPU ^bg()^fg(\#e5e5e5) ${cpu cpu1}-${cpu cpu2}-${cpu cpu3}-${cpu cpu4}-${cpu cpu5}-${cpu cpu6}-${cpu cpu7}-${cpu cpu8} \
-^bg(\#1E1E1E)^fg() Temp ^bg()^fg(\#e5e5e5) ${hwmon temp 1}°C \
-^bg(\#1E1E1E)^fg() Memory ^bg()^fg(\#e5e5e5) $mem \
-^bg(\#1E1E1E)^fg() WLAN ^bg()^fg(\#e5e5e5) ${downspeedf wlp5s0}/${upspeedf wlp5s0} \
-^bg(\#1E1E1E)^fg() Battery ^bg()^fg(\#e5e5e5) ${battery_short BAT1} \
-^bg(\#1E1E1E)^fg(\#99CCFF) ${time %a %d %I:%M.%S}
+^bg(\#1e1e1e)^fg() CPU ^bg()^fg(\#cccccc) ${cpu cpu1}-${cpu cpu2}-${cpu cpu3}-${cpu cpu4}-${cpu cpu5}-${cpu cpu6}-${cpu cpu7}-${cpu cpu8} \
+^bg(\#1e1e1e)^fg() Temp ^bg()^fg(\#cccccc) ${hwmon temp 1}°C \
+^bg(\#1e1e1e)^fg() Memory ^bg()^fg(\#cccccc) $mem \
+^bg(\#1e1e1e)^fg() WLAN ^bg()^fg(\#cccccc) ${downspeedf wlp5s0}/${upspeedf wlp5s0} \
+^bg(\#1e1e1e)^fg() Battery ^bg()^fg(\#cccccc) ${battery_percent BAT1} \
+^bg(\#1e1e1e)^fg(\#39B7CD) ${time %a %d %I:%M.%S} \

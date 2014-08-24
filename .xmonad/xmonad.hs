@@ -44,7 +44,7 @@ myTerminal = "/usr/bin/urxvt"
 -- Workspaces
 --
 
-myWorkspaces = ["main","text","ide","web","mail","chat","media","gimp","misc"]
+myWorkspaces = ["main","text","ide","web","mail","chat","media","read","gimp"]
 
 
 ------------------------------------------------------------------------
@@ -86,13 +86,13 @@ myManageHook = composeAll . concat $
   ]
   where
       viewShift          = doF . liftM2 (.) W.greedyView W.shift
-      myClassWebShifts   = ["Firefox","Chromium"]
-      myClassChatShifts  = ["Pidgin", "Skype"]
-      myClassMediaShifts = ["mpv"]
       myClassTextShifts  = ["Subl3"]
       myClassDevShifts   = ["Eclipse", "Android SDK Manager"]
+      myClassWebShifts   = ["Firefox","Chromium"]
       myClassMailShifts  = ["Thunderbird"]
-      myClassFloats      = ["feh", "Android SDK Manager"]
+      myClassChatShifts  = ["Pidgin", "Skype"]
+      myClassMediaShifts = ["Audacity"]
+      myClassFloats      = ["feh", "mpv", "Android SDK Manager", "Transmission-gtk", "Nm-connection-editor", "File Operation Progress"]
       myResourceFloats   = ["Downloads", "Dialog", "Places", "Browser"]
       myClassIgnores     = ["stalonetray"]
       myResourceIgnores  = ["desktop_window"]
@@ -104,12 +104,11 @@ myManageHook = composeAll . concat $
 
 myLayoutHook = onWorkspace "chat" chatLayout $
                onWorkspace "gimp" gimpLayout $
-               spacingLayout
+               standardLayouts
     where
       standardLayouts = avoidStruts(Tall 1 (3/100) (1/2) ||| Mirror (Tall 1 (3/100) (1/2)))
-      chatLayout      = spacing 2 $ avoidStruts(IM (1%5) (Or (Title "Buddy List") (And (Resource "main") (ClassName "pidgin"))))
-      gimpLayout      = spacing 2 $ avoidStruts((withIM (0.12) (Role "gimp-toolbox") $ reflectHoriz $ withIM (0.15) (Role "gimp-dock") Full))
-      spacingLayout   = (smartSpacing 2 $ standardLayouts)
+      chatLayout      = avoidStruts(IM (1%5) (Or (Title "Buddy List") (And (Resource "main") (ClassName "pidgin"))))
+      gimpLayout      = avoidStruts((withIM (0.12) (Role "gimp-toolbox") $ reflectHoriz $ withIM (0.15) (Role "gimp-dock") Full))
 
 
 ------------------------------------------------------------------------
@@ -117,22 +116,22 @@ myLayoutHook = onWorkspace "chat" chatLayout $
 --
 
 -- Custom theme colors
-red       = "#e53238"
-pink      = "#ed6666"
-green     = "#99CC66"
+magenta   = "#ed6666"
+green     = "#83be49"
 yellow    = "#ffff00"
-blue      = "#99CCFF"
+voilet    = "#b98a93"
+blue      = "#468284"
 white     = "#cccccc"
 lightGrey = "#cfcfcf"
 darkGrey  = "#444444"
 black     = "#000000"
 
 -- Border colors
-myNormalBorderColor  = lightGrey
-myFocusedBorderColor = pink
+myNormalBorderColor  = darkGrey
+myFocusedBorderColor = magenta
 
 -- Width of the window border in pixels.
-myBorderWidth = 1
+myBorderWidth = 2
 
 
 ------------------------------------------------------------------------
@@ -156,7 +155,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
   -- Launch dmenu.
   , ((modMask, xK_p),
-     spawn "dmenu_run -fn 'DejaVu Sans Mono' -h 22 -nb '#000000' -nf '#cfcfcf' -sb '#ff807a' -sf '#000000'")
+     spawn "dmenu_run -class 'dmenu' -fn 'DejaVu Sans Mono-10' -h 22 -nb '#000000' -nf '#cfcfcf' -sb '#ff807a' -sf '#000000'")
 
   -- Lock the screen using xscreensaver.
   , ((modMask .|. controlMask, xK_l),
@@ -353,14 +352,14 @@ myLogHook h = dynamicLogWithPP $ myPrettyPrinter h
 myPrettyPrinter h = dzenPP
   {
     ppOutput          = hPutStrLn h
-  , ppCurrent         = dzenColor black pink . pad
+  , ppCurrent         = dzenColor black magenta . pad
   , ppHidden          = dzenColor white black . pad . clickable myWorkspaces . trimSpace
   , ppHiddenNoWindows = dzenColor darkGrey black . pad . clickable myWorkspaces . trimSpace
-  , ppUrgent          = dzenColor black red . pad . clickable myWorkspaces . trimSpace . dzenStrip
+  , ppUrgent          = dzenColor black yellow . pad . clickable myWorkspaces . trimSpace . dzenStrip
   , ppWsSep           = " "
   , ppSep             = " | "
-  , ppTitle           = (" " ++) . dzenColor pink black . shorten 120 . dzenEscape
-  , ppLayout          = dzenColor green black . pad .
+  , ppTitle           = (" " ++) . dzenColor magenta black . shorten 120 . dzenEscape
+  , ppLayout          = dzenColor white black . pad .
                         (\x -> case x of
                           "SimplestFloat"              -> "Float"
                           "SmartSpacing 2 Tall"        -> "Tall"
@@ -387,7 +386,7 @@ myDzenFont = "DejaVu Sans Mono:pixelsize=12"
 myWorkDzen = DzenConf {
     x_position = Just 0
   , y_position = Just 0
-  , width      = Just 1820
+  , width      = Just 1810
   , height     = Just 22
   , alignment  = Just LeftAlign
   , font       = Just myDzenFont
@@ -405,7 +404,7 @@ myMusicDzen = DzenConf {
   , height     = Just 24
   , alignment  = Just LeftAlign
   , font       = Just myDzenFont
-  , fg_color   = Just pink
+  , fg_color   = Just voilet
   , bg_color   = Just black
   , exec       = []
   , addargs    = []
@@ -419,7 +418,7 @@ mySysInfoDzen = DzenConf {
   , height     = Just 24
   , alignment  = Just RightAlign
   , font       = Just myDzenFont
-  , fg_color   = Just pink
+  , fg_color   = Just green
   , bg_color   = Just black
   , exec       = []
   , addargs    = []

@@ -59,8 +59,14 @@ function __prompt_command()
 }
 PROMPT_COMMAND=__prompt_command
 
-# Add ~/bin to PATH
+# Add local BIN to PATH
 export PATH=$PATH:$HOME/bin
+
+# Add Xmonad helper scripts to PATH
+export PATH=$PATH:$HOME/.xmonad/scripts
+
+# Add Android SDK to PATH
+export PATH=$PATH:$HOME/java-dev/android-sdk/platform-tools
 
 # Set Sublime Text as default editor
 export EDITOR="subl3"
