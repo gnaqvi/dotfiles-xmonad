@@ -13,5 +13,6 @@
 
 .xmonad/*
 !.xmonad/xmonad.hs
+!.xmonad/lib
 !.xmonad/conky/
 !.xmonad/scripts/
