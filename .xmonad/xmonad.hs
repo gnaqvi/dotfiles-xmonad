@@ -96,8 +96,8 @@ myManageHook = composeAll . concat $
       myClassChatShifts  = ["Pidgin", "Skype"]
       myClassMediaShifts = ["Audacity"]
       myGimpShift        = ["Gimp"]
-      myClassFloats      = ["feh", "mpv", "Android SDK Manager", "Transmission-gtk", "Nm-connection-editor", "File Operation Progress"]
-      myResourceFloats   = ["Downloads", "Dialog", "Places", "Browser"]
+      myClassFloats      = ["feh", "mpv", "Android SDK Manager", "Transmission-gtk", "Nm-connection-editor"]
+      myResourceFloats   = ["File Operation Progress", "Downloads", "Dialog", "Places", "Browser"]
       myClassIgnores     = ["stalonetray"]
       myResourceIgnores  = ["desktop_window"]
 
@@ -356,10 +356,10 @@ myLogHook h = dynamicLogWithPP $ myPrettyPrinter h
 myPrettyPrinter h = dzenPP
   {
     ppOutput          = hPutStrLn h
-  , ppCurrent         = dzenColor black magenta . pad
+  , ppCurrent         = dzenColor darkGrey magenta . pad
   , ppHidden          = dzenColor white black . pad . clickable myWorkspaces . trimSpace
   , ppHiddenNoWindows = dzenColor darkGrey black . pad . clickable myWorkspaces . trimSpace
-  , ppUrgent          = dzenColor black yellow . pad . clickable myWorkspaces . trimSpace . dzenStrip
+  , ppUrgent          = dzenColor black green . pad . clickable myWorkspaces . trimSpace . dzenStrip
   , ppWsSep           = " "
   , ppSep             = " | "
   , ppTitle           = (" " ++) . dzenColor magenta black . shorten 120 . dzenEscape
@@ -384,7 +384,7 @@ clickableExp (ws:other) n l | l == ws = "^ca(1,xdotool key super+" ++ show (n) +
 trimSpace = f . f
     where f = reverse . dropWhile isSpace
 
-myDzenFont = "DejaVu Sans Mono:pixelsize=12"
+myDzenFont = "DejaVu Sans Mono:pixelsize=12:Bold"
 
 -- Workspace dzen bar
 myWorkDzen = DzenConf {

@@ -19,6 +19,7 @@ fi
 dropboxd &
 mpd
 pidgin &
+udiskie --tray &
 
 # Enable numlock
 numlockx &

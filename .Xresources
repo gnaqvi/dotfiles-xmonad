@@ -1,6 +1,6 @@
 ! Cursor theme
-Xcursor.theme: Simple-and-Soft
-Xcursor.size: 52
+Xcursor.theme: oxy-white
+Xcursor.size: 32
 
 !-------------------------------------------------------------------------------
 ! Xft settings
@@ -19,7 +19,6 @@ Xft.hintstyle: hintslight
 !-------------------------------------------------------------------------------
 
 !URxvt.depth: 32
-URxvt*.transparent: false
 !URxvt.fading: 0
 URxvt.urgentOnBell: true
 URxvt.visualBell: false
@@ -29,7 +28,7 @@ URxvt.lineSpace: 1
 
 ! Padding
 URxvt.internalBorder:10
-URxvt.externalBorder:02
+URxvt.externalBorder:0
 
 ! Font
 URxvt.font: xft:Inconsolata:size=11:style=Regular
@@ -70,6 +69,7 @@ URxvt.pointerBlank: false
 ! Colours
 URxvt*background: #2D2D2D
 URxvt*foreground: #CCCCCC
+URxvt*borderColor: #2D2D2D
 URxvt*cursorColor: #999999
 URxvt*colorBD: #FFFFFF
 URxvt*colorUL: #CCCCFF
