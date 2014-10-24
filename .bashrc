@@ -66,3 +66,12 @@ alias chmod='chmod --preserve-root'
 alias chgrp='chgrp --preserve-root'
 alias cls=' echo -ne "\033c"'       # clear screen for real (it does not work in Terminology)
 # }}}
+
+## Apache permission helpers {{{
+http_files() {
+    find $1 -type f -exec chmod 640 {} \;
+}
+http_dirs() {
+    find $1 -type d -exec chmod 2750 {} \;
+}
+## }}}
