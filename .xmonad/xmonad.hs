@@ -110,8 +110,8 @@ myLayoutHook = onWorkspace "chat" chatLayout $
                onWorkspace "gimp" gimpLayout $
                standardLayouts
     where
-      standardLayouts = avoidStruts(Tall 1 (3/100) (1/2) ||| Mirror (Tall 1 (3/100) (1/2)))
-      chatLayout      = avoidStruts(IM (1%5) (Or (Title "Buddy List") (And (Resource "main") (ClassName "pidgin"))))
+      standardLayouts = smartSpacing 3 $ avoidStruts(Tall 1 (3/100) (1/2) ||| Mirror (Tall 1 (3/100) (1/2)))
+      chatLayout      = smartSpacing 3 $ avoidStruts(IM (1%5) (Or (Title "Buddy List") (And (Resource "main") (ClassName "pidgin"))))
       gimpLayout      = avoidStruts((withIM (0.12) (Role "gimp-toolbox") $ reflectHoriz $ withIM (0.15) (Role "gimp-dock") Full))
 
 
@@ -127,11 +127,12 @@ voilet    = "#b98a93"
 blue      = "#468284"
 white     = "#cccccc"
 lightGrey = "#cfcfcf"
+grey      = "#646464"
 darkGrey  = "#444444"
 black     = "#000000"
 
 -- Border colors
-myNormalBorderColor  = darkGrey
+myNormalBorderColor  = grey
 myFocusedBorderColor = magenta
 
 -- Width of the window border in pixels.
@@ -404,11 +405,25 @@ myWorkDzen = DzenConf {
 myMusicDzen = DzenConf {
     x_position = Just 0
   , y_position = Just 1080
-  , width      = Just 700
+  , width      = Just 880
   , height     = Just 24
   , alignment  = Just LeftAlign
   , font       = Just myDzenFont
-  , fg_color   = Just voilet
+  , fg_color   = Just magenta
+  , bg_color   = Just black
+  , exec       = []
+  , addargs    = []
+}
+
+-- Date dzen bar
+myDateDzen = DzenConf {
+    x_position = Just 880
+  , y_position = Just 1080
+  , width      = Just 160
+  , height     = Just 24
+  , alignment  = Just Centered
+  , font       = Just myDzenFont
+  , fg_color   = Just green
   , bg_color   = Just black
   , exec       = []
   , addargs    = []
@@ -416,13 +431,13 @@ myMusicDzen = DzenConf {
 
 -- System information dzen bar
 mySysInfoDzen = DzenConf {
-    x_position = Just 700
+    x_position = Just 1040
   , y_position = Just 1080
   , width      = Just 1220
   , height     = Just 24
   , alignment  = Just RightAlign
   , font       = Just myDzenFont
-  , fg_color   = Just green
+  , fg_color   = Just magenta
   , bg_color   = Just black
   , exec       = []
   , addargs    = []
@@ -441,8 +456,9 @@ myStartupHook = return ()
 
 main = do
   workspaceBar <- spawnDzen myWorkDzen
-  spawnToDzen "conky -c ~/.xmonad/conky/sysinfo" mySysInfoDzen
   spawnToDzen "conky -c ~/.xmonad/conky/music" myMusicDzen
+  spawnToDzen "conky -c ~/.xmonad/conky/date" myDateDzen
+  spawnToDzen "conky -c ~/.xmonad/conky/sysinfo" mySysInfoDzen
   xmonad $ withUrgencyHook NoUrgencyHook $ defaults {
         logHook     = myLogHook workspaceBar
       , manageHook  = manageDocks <+> myManageHook

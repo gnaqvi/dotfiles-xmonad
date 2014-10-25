@@ -12,4 +12,3 @@ TEXT
 ^bg(\#1e1e1e)^fg() Memory ^bg()^fg(\#cccccc) $mem \
 ^bg(\#1e1e1e)^fg() WLAN ^bg()^fg(\#cccccc) ${downspeedf wlp5s0}/${upspeedf wlp5s0} \
 ^bg(\#1e1e1e)^fg() Battery ^bg()^fg(\#cccccc) ${battery_percent BAT1} \
-^bg(\#1e1e1e)^fg(\#39B7CD) ${time %a %d %I:%M.%S} \

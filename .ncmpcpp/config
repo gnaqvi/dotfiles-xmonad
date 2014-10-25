@@ -4,7 +4,7 @@ mpd_crossfade_time = "5"
 # Visualizer
 visualizer_fifo_path = "/tmp/mpd.fifo"
 visualizer_output_name = "fifo"
-visualizer_type = "wave" (spectrum/wave)
+visualizer_type = "spectrum" (spectrum/wave)
 
 # Playlist
 song_columns_list_format = "(6f)[cyan]{l} (40)[default]{t|f} (25)[red]{a} (30)[blue]{b}"
@@ -31,10 +31,10 @@ volume_color = "cyan"
 state_line_color = "green"
 state_flags_color = "red"
 main_window_color = "default"
-color1 = "default"
+color1 = "red"
 color2 = "black"
 main_window_highlight_color = "red"
-progressbar_color = "green"
+progressbar_color = "red"
 statusbar_color = "black"
 active_column_color = "red"
 visualizer_color = "red"

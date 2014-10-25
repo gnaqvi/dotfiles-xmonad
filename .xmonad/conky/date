@@ -1,0 +1,11 @@
+background false
+cpu_avg_samples 2
+format_human_readable yes
+if_up_strictness address
+short_units on
+update_interval 1.0
+out_to_console yes
+
+TEXT
+^bg(\#1e1e1e)^fg() ${time %a %d %I:%M.%S} \
+
