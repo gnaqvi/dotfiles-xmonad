@@ -6,7 +6,7 @@ style "myfont" {
     font_name = "Droid Sans 11"
 }
 widget_class "*" style "myfont"
-gtk-font-name = "Droid Sans 11"
+gtk-font-name = "Inconsolas 11"
 
 # Icon theme
 gtk-icon-theme-name = "Numix"

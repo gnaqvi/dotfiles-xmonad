@@ -1,0 +1,49 @@
+# Conky settings
+background no
+update_interval 1
+
+override_utf8_locale yes
+
+double_buffer yes
+no_buffers yes
+
+text_buffer_size 2048
+
+# Window specifications
+own_window no
+
+border_inner_margin 0
+border_outer_margin 0
+
+alignment bl
+gap_x 100
+gap_y 100
+
+# Graphics settings
+draw_shades no # Enabling this may make text look better when using a background image
+draw_outline no
+draw_borders no
+draw_graph_borders no
+
+# Text settings
+use_xft yes
+xftalpha 0
+text_buffer_size 2048
+
+# Minimum size of text area
+minimum_size 1080
+
+# Maximum width
+maximum_width 1920 # 1080p screens
+
+uppercase no
+default_color FFFFFF
+
+TEXT
+${voffset 10}${font Droid Sans:size=50}${time %A}${font}${voffset -10}
+${voffset 10}${font Droid Sans:size=50}${time %B} ${time %e}${font}${voffset -10}
+${voffset 10}${font Droid Sans:size=100}${time %I:%M %p}${font}${voffset -10}
+${voffset 30}${font Droid Sans}CPU Usage: $cpu% | RAM Usage: $mem${font}${voffset -30}
+
+# Optional Background image, not guaranteed to work
+# ${image ~/bg.png -p -10,-10 -s 1920x1080}

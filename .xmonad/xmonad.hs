@@ -97,7 +97,7 @@ myManageHook = composeAll . concat $
       myClassMediaShifts = ["Audacity"]
       myGimpShift        = ["Gimp"]
       myClassFloats      = ["feh", "mpv", "Android SDK Manager", "Transmission-gtk", "Nm-connection-editor"]
-      myResourceFloats   = ["File Operation Progress", "Downloads", "Dialog", "Places", "Browser"]
+      myResourceFloats   = ["File Operation Progress", "Open File", "Downloads", "Dialog", "Places", "Browser"]
       myClassIgnores     = ["stalonetray"]
       myResourceIgnores  = ["desktop_window"]
 
@@ -110,8 +110,8 @@ myLayoutHook = onWorkspace "chat" chatLayout $
                onWorkspace "gimp" gimpLayout $
                standardLayouts
     where
-      standardLayouts = smartSpacing 3 $ avoidStruts(Tall 1 (3/100) (1/2) ||| Mirror (Tall 1 (3/100) (1/2)))
-      chatLayout      = smartSpacing 3 $ avoidStruts(IM (1%5) (Or (Title "Buddy List") (And (Resource "main") (ClassName "pidgin"))))
+      standardLayouts = smartSpacing 2 $ avoidStruts(Tall 1 (3/100) (1/2) ||| Mirror (Tall 1 (3/100) (1/2)))
+      chatLayout      = smartSpacing 2 $ avoidStruts(IM (1%5) (Or (Title "Buddy List") (And (Resource "main") (ClassName "pidgin"))))
       gimpLayout      = avoidStruts((withIM (0.12) (Role "gimp-toolbox") $ reflectHoriz $ withIM (0.15) (Role "gimp-dock") Full))
 
 
@@ -120,12 +120,9 @@ myLayoutHook = onWorkspace "chat" chatLayout $
 --
 
 -- Custom theme colors
-magenta   = "#ed6666"
-green     = "#83be49"
-yellow    = "#ffff00"
-voilet    = "#b98a93"
-blue      = "#468284"
-white     = "#cccccc"
+red       = "#da3e37" --"#ed6666"
+green     = "#6feabb" --"#83be49"
+white     = "#f1e3e2" --"#e7e6e6"
 lightGrey = "#cfcfcf"
 grey      = "#646464"
 darkGrey  = "#444444"
@@ -133,10 +130,10 @@ black     = "#000000"
 
 -- Border colors
 myNormalBorderColor  = grey
-myFocusedBorderColor = magenta
+myFocusedBorderColor = lightGrey
 
 -- Width of the window border in pixels.
-myBorderWidth = 2
+myBorderWidth = 3
 
 
 ------------------------------------------------------------------------
@@ -160,7 +157,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
   -- Launch dmenu.
   , ((modMask, xK_p),
-     spawn "dmenu_run -class 'dmenu' -fn 'DejaVu Sans Mono-10' -h 22 -nb '#000000' -nf '#cfcfcf' -sb '#ff807a' -sf '#000000'")
+     spawn "dmenu_run -class 'dmenu' -fn 'DejaVu Sans Mono-10' -h 22 -nb '#000000' -nf '#f1e3e2' -sb '#da3e37' -sf '#000000'")
 
   -- Lock the screen using xscreensaver.
   , ((modMask .|. controlMask, xK_l),
@@ -357,19 +354,19 @@ myLogHook h = dynamicLogWithPP $ myPrettyPrinter h
 myPrettyPrinter h = dzenPP
   {
     ppOutput          = hPutStrLn h
-  , ppCurrent         = dzenColor darkGrey magenta . pad
+  , ppCurrent         = dzenColor black red . pad
   , ppHidden          = dzenColor white black . pad . clickable myWorkspaces . trimSpace
-  , ppHiddenNoWindows = dzenColor darkGrey black . pad . clickable myWorkspaces . trimSpace
+  , ppHiddenNoWindows = dzenColor grey black . pad . clickable myWorkspaces . trimSpace
   , ppUrgent          = dzenColor black green . pad . clickable myWorkspaces . trimSpace . dzenStrip
   , ppWsSep           = " "
   , ppSep             = " | "
-  , ppTitle           = (" " ++) . dzenColor magenta black . shorten 120 . dzenEscape
+  , ppTitle           = (" " ++) . dzenColor red black . shorten 120 . dzenEscape
   , ppLayout          = dzenColor white black . pad .
                         (\x -> case x of
                           "SimplestFloat"              -> "Float"
                           "SmartSpacing 2 Tall"        -> "Tall"
                           "SmartSpacing 2 Mirror Tall" -> "Mirror"
-                          "Spacing 2 IM"               -> "IM"
+                          "SmartSpacing 2 IM"               -> "IM"
                           _                            -> x
                         )
   }
@@ -409,7 +406,7 @@ myMusicDzen = DzenConf {
   , height     = Just 24
   , alignment  = Just LeftAlign
   , font       = Just myDzenFont
-  , fg_color   = Just magenta
+  , fg_color   = Just red
   , bg_color   = Just black
   , exec       = []
   , addargs    = []
@@ -437,7 +434,7 @@ mySysInfoDzen = DzenConf {
   , height     = Just 24
   , alignment  = Just RightAlign
   , font       = Just myDzenFont
-  , fg_color   = Just magenta
+  , fg_color   = Just red
   , bg_color   = Just black
   , exec       = []
   , addargs    = []

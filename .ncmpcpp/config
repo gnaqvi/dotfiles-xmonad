@@ -1,3 +1,5 @@
+mpd_host "127.0.0.1"
+mpd_port "6600"
 mpd_music_dir = "/run/media/ghazanfar/Data/Music"
 mpd_crossfade_time = "5"
 
@@ -7,7 +9,7 @@ visualizer_output_name = "fifo"
 visualizer_type = "spectrum" (spectrum/wave)
 
 # Playlist
-song_columns_list_format = "(6f)[cyan]{l} (40)[default]{t|f} (25)[red]{a} (30)[blue]{b}"
+song_columns_list_format = "(6f)[cyan]{l} (30)[default]{t|f} (25)[red]{a} (30)[blue]{b}"
 now_playing_prefix = "$b"
 now_playing_suffix = "$/b"
 playlist_display_mode = "columns" (classic/columns)

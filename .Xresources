@@ -67,19 +67,18 @@ URxvt.cursorUnderline: true
 URxvt.pointerBlank: false
 
 ! Colours
-URxvt*background: #2D2D2D
-URxvt*foreground: #CCCCCC
-URxvt*borderColor: #2D2D2D
+URxvt*background: #141414
+URxvt*foreground: #F1E3E2
 URxvt*cursorColor: #999999
 URxvt*colorBD: #FFFFFF
 URxvt*colorUL: #CCCCFF
 
 !BLK
-URxvt*color0:#666666
-URxvt*color8:#999999
+URxvt*color0:#444444
+URxvt*color8:#777777
 !RED
 URxvt*color1:#E53238
-URxvt*color9:#ED6666
+URxvt*color9:#DA3E37
 !GRN
 URxvt*color2: #99CC66
 URxvt*color10: #99FF99
@@ -90,11 +89,11 @@ URxvt*color11: #FFFF99
 URxvt*color4: #6699CC
 URxvt*color12: #99CCFF
 !MAG
-URxvt*color5:#CC6699
+URxvt*color5: #CC6699
 URxvt*color13: #FF99CC
 !CYN
-URxvt*color6:#66CCCC
+URxvt*color6: #66CCCC
 URxvt*color14: #99FFFF
 !WHT
-URxvt*color7:#CCCCCC
+URxvt*color7: #F1E3E2
 URxvt*color15: #FFFFFF

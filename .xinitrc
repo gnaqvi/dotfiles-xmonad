@@ -21,9 +21,6 @@ mpd
 pidgin &
 udiskie --tray &
 
-# Enable numlock
-numlockx &
-
 # Start screensaver
 xss-lock -- xscreensaver-command -lock &
 

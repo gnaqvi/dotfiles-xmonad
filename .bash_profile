@@ -73,3 +73,6 @@ export EDITOR="subl3"
 
 # Set Firefox as default browser
 export BROWSER="firefox"
+
+# Flash overlay fix
+VDPAU_NVIDIA_NO_OVERLAY=1

@@ -1,3 +1,3 @@
 #!/bin/bash
 # Set background image
-feh --bg-scale /home/ghazanfar/pictures/wallpapers/tech.jpg
+feh --bg-fill /home/ghazanfar/pictures/wallpapers/red-shapes.jpg

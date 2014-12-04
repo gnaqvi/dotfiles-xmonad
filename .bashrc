@@ -67,6 +67,11 @@ alias chgrp='chgrp --preserve-root'
 alias cls=' echo -ne "\033c"'       # clear screen for real (it does not work in Terminology)
 # }}}
 
+## List open ports
+function open_ports() {
+    echo 'User: Command: Port'; echo "--------------------" ; lsof -i -P | grep -i 'listen' | awk '{print $3, $1, $9}' | sort | uniq | sed 's/ [a-z0-9\.\*]*:/ /' | sort -k 3 -n
+}
+
 ## Apache permission helpers {{{
 http_files() {
     find $1 -type f -exec chmod 640 {} \;
